@@ -5,6 +5,7 @@ import org.example.invalidtx.service.TransferService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class TransferServiceTest {
@@ -19,5 +20,12 @@ public class TransferServiceTest {
 
         transfer = transferService.selectTransferById(transfer.getId());
         System.out.println(transfer);
+    }
+
+    @Test
+    void testMakeTransferInvalidAmount() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            transferService.makeTransfer("A", "B", -100);
+        });
     }
 }
