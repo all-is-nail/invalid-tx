@@ -5,6 +5,8 @@ import org.example.invalidtx.service.TransferService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.transaction.TestTransaction;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -47,5 +49,19 @@ public class TransactionManageTest {
             assertNull(transfer, "Transfer should be rolled back");
             return null;
         });
+    }
+
+    /**
+     * Test case to configure a declarative transaction and make sure it commits.
+     */
+    @Test
+    @Transactional
+    public void testConfigDeclarativeTransactionCommit() {
+        // in test context,default transaction for test method is rollback
+        // but in this case,use TestTransaction to control transaction to commit
+        TestTransaction.flagForCommit();
+        // Create first transfer
+        Transfer transfer = transferService.makeTransfer("Account1", "Account2", 1000);
+        assertNotNull(transfer.getId(), "Transfer 1 should have an ID");
     }
 }
