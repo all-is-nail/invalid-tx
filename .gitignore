@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+### Cursor ###
+.cursor/
+### H2 ###
+.h2/
