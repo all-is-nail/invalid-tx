@@ -7,11 +7,11 @@ server:
   port: 8080
 spring:
   datasource:
-    data: classpath:db/data.sql # 初始化数据
+#    data: classpath:db/data.sql # 初始化数据
     driver-class-name: org.h2.Driver
     password: '' # H2数据库默认密码为空
     schema: classpath:db/schema.sql # 初始化表结构
-    url: jdbc:h2:mem:invalid-tx
+    url: jdbc:h2:file:./.h2/invalid-tx;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
     username: sa # H2数据库默认用户名
   h2:
     console:
